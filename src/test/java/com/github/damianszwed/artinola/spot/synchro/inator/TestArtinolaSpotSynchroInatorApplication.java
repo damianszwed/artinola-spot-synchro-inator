@@ -1,4 +1,4 @@
-package com.github.damianszwed.artinola_spot_synchro_inator;
+package com.github.damianszwed.artinola.spot.synchro.inator;
 
 import org.springframework.boot.SpringApplication;
 
