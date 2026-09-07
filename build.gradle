@@ -2,6 +2,8 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '4.0.7'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id 'org.openapi.generator' version '7.25.0'
+	id 'com.diffplug.spotless' version '8.10.2'
 }
 
 group = 'com.github.damianszwed'
@@ -19,6 +21,7 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security-oauth2-client'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -31,6 +34,49 @@ dependencies {
 	testCompileOnly 'org.projectlombok:lombok'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	testAnnotationProcessor 'org.projectlombok:lombok'
+}
+
+openApiGenerate {
+	generatorName = 'spring'
+	inputSpec = "$projectDir/src/main/openapi/swagger.yml"
+	outputDir = "$buildDir/generated/openapi"
+	apiPackage = 'com.github.damianszwed.artinola.spot.synchro.inator.api'
+	modelPackage = 'com.github.damianszwed.artinola.spot.synchro.inator.model'
+	invokerPackage = 'com.github.damianszwed.artinola.spot.synchro.inator.api'
+	globalProperties = [
+		apis: '',
+		models: '',
+		supportingFiles: 'false'
+	]
+	configOptions = [
+		annotationLibrary: 'none',
+		documentationProvider: 'none',
+		generateJsonIncludeAnnotations: 'false',
+		generateJsonSetterNullsAnnotations: 'false',
+		interfaceOnly: 'true',
+		skipDefaultInterface: 'true',
+		useSpringBoot3: 'true',
+		useTags: 'true'
+	]
+}
+
+sourceSets {
+	main {
+		java {
+			srcDir "$buildDir/generated/openapi/src/main/java"
+		}
+	}
+}
+
+spotless {
+	java {
+		target 'src/**/*.java'
+		palantirJavaFormat()
+	}
+}
+
+tasks.named('compileJava') {
+	dependsOn tasks.named('openApiGenerate')
 }
 
 tasks.named('test') {

@@ -1,0 +1,22 @@
+openapi: 3.0.3
+info:
+  title: Artinola Spot Synchro Inator API
+  description: API for synchronizing Artinola spots.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+paths:
+  /hello:
+    get:
+      operationId: hello
+      tags:
+        - hello
+      summary: Return a hello-world greeting
+      responses:
+        '200':
+          description: A hello-world greeting
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: Hello, World!
