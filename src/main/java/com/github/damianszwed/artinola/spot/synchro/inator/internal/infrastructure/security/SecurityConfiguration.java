@@ -1,4 +1,4 @@
-package com.github.damianszwed.artinola.spot.synchro.inator;
+package com.github.damianszwed.artinola.spot.synchro.inator.internal.infrastructure.security;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
