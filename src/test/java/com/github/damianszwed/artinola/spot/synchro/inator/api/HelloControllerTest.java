@@ -5,17 +5,28 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.test.web.servlet.MockMvc;
 
+@SpringBootTest
+@AutoConfigureMockMvc
 class HelloControllerTest {
+
+    @Autowired
+    private MockMvc mockMvc;
 
     @Test
     void returnsHelloWorld() throws Exception {
-        var mockMvc = MockMvcBuilders.standaloneSetup(new HelloController()).build();
-
         mockMvc.perform(get("/hello"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith("text/plain"))
                 .andExpect(content().string("Hello, World!"));
+    }
+
+    @Test
+    void keepsOtherEndpointsSecured() throws Exception {
+        mockMvc.perform(get("/")).andExpect(status().isUnauthorized());
     }
 }
