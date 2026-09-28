@@ -54,6 +54,7 @@ openApiGenerate {
 		generateJsonIncludeAnnotations: 'false',
 		generateJsonSetterNullsAnnotations: 'false',
 		interfaceOnly: 'true',
+		openApiNullable: 'false',
 		skipDefaultInterface: 'true',
 		useSpringBoot3: 'true',
 		useTags: 'true'

@@ -12,9 +12,9 @@ import org.springframework.security.web.SecurityFilterChain;
 class SecurityConfiguration {
 
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain securityFilterChain(HttpSecurity http) {
         return http.authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.GET, "/hello")
+                        .requestMatchers(HttpMethod.GET, "/sync")
                         .permitAll()
                         .anyRequest()
                         .authenticated())

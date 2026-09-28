@@ -1,7 +1,8 @@
-package com.github.damianszwed.artinola.spot.synchro.inator.api;
+package com.github.damianszwed.artinola.spot.synchro.inator.api.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
@@ -12,17 +13,17 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class HelloControllerTest {
+class SyncControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    void returnsHelloWorld() throws Exception {
-        mockMvc.perform(get("/hello"))
+    void returnsSuccessfulSyncStatus() throws Exception {
+        mockMvc.perform(get("/sync"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith("text/plain"))
-                .andExpect(content().string("Hello, World!"));
+                .andExpect(content().contentTypeCompatibleWith("application/json"))
+                .andExpect(jsonPath("$.status").value("ok"));
     }
 
     @Test

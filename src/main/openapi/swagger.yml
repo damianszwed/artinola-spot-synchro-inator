@@ -6,17 +6,27 @@ info:
 servers:
   - url: http://localhost:8080
 paths:
-  /hello:
+  /sync:
     get:
-      operationId: hello
+      operationId: sync
       tags:
-        - hello
-      summary: Return a hello-world greeting
+        - sync
+      summary: Trigger calendar sync
       responses:
         '200':
-          description: A hello-world greeting
+          description: Trigger calendar sync from spreadsheet
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
-              example: Hello, World!
+                $ref: '#/components/schemas/SyncResponse'
+              example:
+                status: ok
+components:
+  schemas:
+    SyncResponse:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
